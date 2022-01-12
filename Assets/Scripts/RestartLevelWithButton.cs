@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RestartLevelOnCollision : MonoBehaviour
+public class RestartLevelWithButton : MonoBehaviour
 {
 
-    private void OnCollisionEnter(Collision collision)
+    [SerializeField]
+    KeyCode keyRestart;
+
+    void Update()
     {
+        if (Input.GetKey(keyRestart))
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+
+
 }

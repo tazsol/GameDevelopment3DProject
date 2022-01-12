@@ -5,27 +5,46 @@ using UnityEngine;
 public class AddPlayerControlledVelocity : MonoBehaviour
 {
     [SerializeField]
-    Vector3 v3Force;
+    Vector3 v3ForceX;
+
+    [SerializeField]
+    Vector3 v3ForceY;
 
     [SerializeField]
     Vector3 jumpForce;
 
     [SerializeField]
-    KeyCode keyPositive;
+    KeyCode keyPositiveX;
 
     [SerializeField]
-    KeyCode keyNegative;
+    KeyCode keyNegativeX;
+
+    [SerializeField]
+    KeyCode keyPositiveY;
+
+    [SerializeField]
+    KeyCode keyNegativeY;
 
     [SerializeField]
     KeyCode keyJump;
 
     void FixedUpdate()
     {
-        if (Input.GetKey(keyPositive))
-            GetComponent<Rigidbody>().velocity += v3Force;
 
-        if (Input.GetKey(keyNegative))
-            GetComponent<Rigidbody>().velocity -= v3Force;
+        GetComponent<Rigidbody>().AddForce(Physics.gravity * 3f, ForceMode.Acceleration);
+
+
+        if (Input.GetKey(keyPositiveX))
+            GetComponent<Rigidbody>().velocity += v3ForceX;
+
+        if (Input.GetKey(keyNegativeX))
+            GetComponent<Rigidbody>().velocity -= v3ForceX;
+
+        if (Input.GetKey(keyPositiveY))
+            GetComponent<Rigidbody>().velocity += v3ForceY;
+
+        if (Input.GetKey(keyNegativeY))
+            GetComponent<Rigidbody>().velocity -= v3ForceY;
 
     }
 
@@ -33,19 +52,6 @@ public class AddPlayerControlledVelocity : MonoBehaviour
     {
         if (Input.GetKeyDown(keyJump))
             GetComponent<Rigidbody>().AddForce(jumpForce, ForceMode.Impulse);
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            StartCoroutine(DashCoroutine());
-    }
-
-    private IEnumerator DashCoroutine()
-    {
-        float startTime = Time.time; // need to remember this to know how long to dash
-        while (Time.time < startTime + 100)
-        {
-            transform.Translate(transform.forward * 5 * Time.deltaTime);
-            // or controller.Move(...), dunno about that script
-            yield return null; // this will make Unity stop here and continue next frame
-        }
     }
 
 }

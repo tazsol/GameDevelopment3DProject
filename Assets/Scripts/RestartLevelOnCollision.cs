@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RestartLevelWithButton : MonoBehaviour
+public class RestartLevelOnCollision : MonoBehaviour
 {
 
     [SerializeField]
-    KeyCode keyRestart;
+    string stringTagOne;
 
-    void Update()
+    [SerializeField]
+    string stringTagTwo;
+
+    private void OnCollisionEnter(Collision collision)
     {
-        if (Input.GetKey(keyRestart))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (collision.collider.tag == stringTagOne || collision.collider.tag == stringTagTwo)
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
